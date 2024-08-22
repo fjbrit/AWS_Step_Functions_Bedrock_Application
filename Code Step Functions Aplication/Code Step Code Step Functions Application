@@ -1,35 +1,108 @@
-# **PROJETO AWS STEP FUNCTIONS E BEDROCK**
-
-![Inteligência Artificial](images/ia-banner.png)
-
-## **Ferramentas Utilizadas**
-
-- **AWS Step Functions**
-- **AWS Bedrock**
-- **Anthropic**
-- **Claude - Haiku**
-
-## **Objetivo**
-
-O objetivo deste projeto é criar um assistente de viagens que forneça roteiros personalizados de acordo com as solicitações dos usuários. O assistente oferece três opções de destinos, recomendações de atrações imperdíveis em cada localidade sugerida, além de sugestões para alimentação, incluindo restaurantes e lanchonetes.
-
-## **Metodologia**
-
-1. **Criação do Fluxo de Trabalho:** O fluxo de trabalho consiste em tarefas orientadas por eventos.
-
-   ![Imagem do Fluxo de Trabalho](images/fluxo-trabalho.png)
-
-2. **Configuração do Modelo de IA:** Nos blocos de tarefas, alterei o modelo de IA utilizado para que a aplicação pudesse devolver as respostas necessárias. O modelo selecionado foi o Claude Haiku da Anthropic.
-
-3. **Ajuste dos Prompts:** Realizei algumas modificações nos prompts para garantir que as funções buscassem as informações necessárias para entregar o resultado esperado.
-
-4. **Primeiro Input:** Solicitei ao modelo opções de viagens para famílias dentro do Brasil, focando em locais bem avaliados e com preços justos.
-
-5. **Segundo Input:** Pedi ao modelo três opções de passeios turísticos em cada um dos destinos sugeridos, dos mais tradicionais aos menos conhecidos, com a condição de serem bem avaliados.
-
-6. **Terceiro Input:** Solicitei que o modelo fornecesse opções de restaurantes e/ou lanchonetes nos destinos sugeridos.
-
-## **Contatos**
-
-- **LinkedIn:** [![LinkedIn](images/linkedin.png)](https://www.linkedin.com/fabiojbrito)
-- **GitHub:** [![GitHub](images/github.png)](https://www.github.com/fjbrit)
+{
+  "Comment": "An example of using Bedrock to chain prompts and their responses together.",
+  "StartAt": "Invoke model with first prompt",
+  "States": {
+    "Invoke model with first prompt": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::bedrock:invokeModel",
+      "Parameters": {
+        "ModelId": "arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
+        "Body": {
+          "anthropic_version": "bedrock-2023-05-31",
+          "max_tokens": 200,
+          "messages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Estou planejando uma viagem em família pelo Brasil, quero que me forneça 3 opções de lugares variados para escolher, praia, campo, cachoeiras e trilhas. Que sejam bem avaliados e com preços justos"
+                }
+              ]
+            }
+          ]
+        },
+        "ContentType": "application/json",
+        "Accept": "*/*"
+      },
+      "Next": "Add first result to conversation history",
+      "ResultPath": "$.result_one",
+      "ResultSelector": {
+        "result_one.$": "$.Body.content[0].text"
+      }
+    },
+    "Add first result to conversation history": {
+      "Type": "Pass",
+      "Next": "Invoke model with second prompt",
+      "Parameters": {
+        "convo_one.$": "States.Format('{}\n{}', $.prompt_one, $.result_one.result_one)"
+      },
+      "ResultPath": "$.convo_one"
+    },
+    "Invoke model with second prompt": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::bedrock:invokeModel",
+      "Parameters": {
+        "ModelId": "arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
+        "Body": {
+          "anthropic_version": "bedrock-2023-05-31",
+          "max_tokens": 200,
+          "messages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Liste três passeios para fazer nesses lugares, que sejam bem conhecidos ou não, mas devem primordialmente ser bem avaliados"
+                }
+              ]
+            }
+          ]
+        },
+        "ContentType": "application/json",
+        "Accept": "*/*"
+      },
+      "Next": "Add second result to conversation history",
+      "ResultSelector": {
+        "result_two.$": "$.Body.content[0].text"
+      },
+      "ResultPath": "$.result_two"
+    },
+    "Add second result to conversation history": {
+      "Type": "Pass",
+      "Next": "Invoke model with third prompt",
+      "Parameters": {
+        "convo_two.$": "States.Format('{}\n{}\n{}', $.convo_one.convo_one, $.prompt_two, $.result_two.result_two)"
+      },
+      "ResultPath": "$.convo_two"
+    },
+    "Invoke model with third prompt": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::bedrock:invokeModel",
+      "Parameters": {
+        "ModelId": "arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
+        "Body": {
+          "anthropic_version": "bedrock-2023-05-31",
+          "max_tokens": 200,
+          "messages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Liste algumas boas opções de restaurantes e ou lanchonetes nestes lugares, opções para almoço e janta"
+                }
+              ]
+            }
+          ]
+        },
+        "ContentType": "application/json",
+        "Accept": "*/*"
+      },
+      "End": true,
+      "ResultSelector": {
+        "result_three.$": "$.Body.content[0].text"
+      }
+    }
+  }
+}
