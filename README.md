@@ -19,21 +19,21 @@ O objetivo deste projeto é criar um assistente de viagens que forneça roteiros
 
 ## **Metodologia**
 
-1. **Criação do Fluxo de Trabalho:** O fluxo de trabalho consiste em tarefas orientadas por eventos. Na primeira parte escolhemos o tamplate que usaremos, podemos escolher algo totalmente do zero, ou modelos pré formatados
+1. **Criação do Fluxo de Trabalho:** O fluxo de trabalho consiste em tarefas orientadas por eventos. Na primeira parte escolhemos o tamplate que usaremos, podemos escolher algo totalmente em branco, ou modelos pré formatados
 
    ![Imagem do Fluxo de Trabalho](Images/1%20choose%20a%20template%202.jpg)
 
 
-2. **Configuração do Modelo de IA:** Nos blocos de tarefas, alterei o modelo de IA utilizado para que a aplicação pudesse devolver as respostas necessárias. O modelo selecionado foi o Claude Haiku da Anthropic.
+2. **Escolhendo o estado da máquina:** Escolha o estado da máquina, dentre algumas opções disponíveis.
 
    ![Imagem do Fluxo de Trabalho](Images/2%20first%20step%20functions.jpg)
 
 
-3. **Ajuste dos Prompts:** Realizei algumas modificações nos prompts para garantir que as funções buscassem as informações necessárias para entregar o resultado esperado.
+3. **Ajuste dos Prompts:** Após realizadas as escolhas, recebemos um modelo já montado do Step Functions, nesta parte podemos modificar nossa estrutura retirando ou inserindo blocos. Aqui também foi escolhido o modelo de IA que usada nessa aplicação, que no caso foi o Haiku da Antropic.
 
 ![Imagem do Fluxo de Trabalho](Images/3%20step%20functions%20bedrock%20scream.jpg)
 
-4. **Alterações tanto no código quanto nos blocos** No Step Functions, é possível trabalhar e fazer alterações tanto no código como nos blocos
+4. **Alterações tanto no código quanto nos blocos** No Step Functions, é possível trabalhar e fazer alterações tanto no código como nos blocos.
 
 ![Imagem do Fluxo de Trabalho](Images/4%20Step%20functions%20code.jpg)
 
