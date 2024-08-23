@@ -19,7 +19,7 @@ O objetivo deste projeto é criar um assistente de viagens que forneça roteiros
 
 ## **Metodologia**
 
-1. **Criação do Fluxo de Trabalho:** O fluxo de trabalho consiste em tarefas orientadas por eventos.
+1. **Criação do Fluxo de Trabalho:** O fluxo de trabalho consiste em tarefas orientadas por eventos. Na primeira parte escolhemos o tamplate que usaremos, podemos escolher algo totalmente do zero, ou modelos pré formatados
 
    ![Imagem do Fluxo de Trabalho](Images/1%20choose%20a%20template%202.jpg)
 
