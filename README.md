@@ -42,5 +42,7 @@ O objetivo deste projeto é criar um assistente de viagens que forneça roteiros
 
 ## **Contatos**
 
-- **LinkedIn:** [![LinkedIn](images/linkedin.png)](www.linkedin.com/in/fabiojbrito)
-- **GitHub:** [![GitHub](images/github.png)](https://www.github.com/fjbrit)
+- [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fabiojbrito)
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/fjbrit)
+
