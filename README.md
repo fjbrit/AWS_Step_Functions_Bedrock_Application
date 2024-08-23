@@ -42,5 +42,5 @@ O objetivo deste projeto é criar um assistente de viagens que forneça roteiros
 
 ## **Contatos**
 
-- **LinkedIn:** [![LinkedIn](images/linkedin.png)](www.linkedin.com/in/fabiojbrito)
+- **LinkedIn:** [![LinkedIn](https://static.vecteezy.com/ti/vetor-gratis/p1/18910721-do-logotipo-do-linkedin-simbolo-do-linkedin-gratis-do-icone-do-linkedin-gratis-vetor.jpg)](www.linkedin.com/in/fabiojbrito)
 - **GitHub:** [![GitHub](images/github.png)](https://www.github.com/fjbrit)
